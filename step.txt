@@ -1,0 +1,199 @@
+1) Створив теку з назвою сайту
+2) Розробив структуру
+  src
+    font
+    img
+    js
+    logo
+    sass
+  index.html
+3) Підключив файл увесь шрифту в html через link - google
+4) На сайті https://fontello.com/ обрав всі іконки які потрібно скачав і закинув файл fontello.css в sass, файл fontello.woff
+і fontello.woff2 закинув в папку font. Прописав шлях в файлі fontello.css та прибрав інші розширення шрифту. Сам файл ще ніяк не підключав
+5) Скачав та закинув modern-normalize.min.css (чомусь теж не підключав)
+6) Створив файл sass - style.scss та прописав там стандарний код
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      figure,
+      p,
+      ol,
+      ul {
+        margin: 0;
+      }
+
+      ol[role='list'],
+      ul[role='list'] {
+        list-style: none;
+        padding-inline: 0;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-size: inherit;
+        font-weight: inherit;
+      }
+
+      img {
+        display: block;
+        max-inline-size: 100%;
+      }
+
+      html {
+        font-family: 'Barlow', sans-serif;
+        scroll-behavior: smooth;
+      }
+7) Створив файл script.js прописав import "../sass/style.scss"; - в html в кінці body додав
+<script type="module" src="/src/js/script.js"></script>
+8) Переробив https://realfavicongenerator.net/ з png в ico - підключив favicon.ico <link rel="icon" type="image/x-icon" href="favicon.ico" />
+9) В папку лого завантажив логотип png
+10) зображеня посортував за секціями
+  promo
+  about
+  form
+  works
+11) підключаю vit
+  в powershell - Set-ExecutionPolicy RemoteSigned (активація скриптів)
+  npm init (та відповів на питання)
+  Наступні команди з довідника
+   npm install -D vite — це стандартний спосіб додати інструмент Vite до вашого проєкту як залежність для розробки.
+   npm i sass -D   - додаєм SASS
+   npx vite — це спосіб запустити Vite без необхідності встановлювати його глобально на ваш комп'ютер, типу запускаємо проєкту
+   ctrl + c - стоп
+12) ОДИН ФАЙЛ НЕ РОЗІБРАВ АЛЕ ПЕРЕНІС В ПРОЕКТ SASS - pxtorem.scss
+13) Скопіював файл .gitignore
+    # See https://help.github.com/ignore-files/ for more about ignoring files.
+
+    # dependencies
+    /node_modules
+
+    # testing
+    /coverage
+
+    # production
+    /build
+
+    # misc
+    .DS_Store
+    .env.local
+    .env.development.local
+    .env.test.local
+    .env.production.local
+
+    npm-debug.log*
+    yarn-debug.log*
+    yarn-error.log*
+14) створив файл vite.config.js (вказав що головний файл index.html)
+    import { dirname, resolve } from "node:path";
+    import { fileURLToPath } from "node:url";
+    import { defineConfig } from "vite";
+
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+
+    export default defineConfig({
+      build: {
+        rollupOptions: {
+          input: {
+            main: resolve(__dirname, "index.html"),
+          },
+        },
+      },
+    });
+15) Додав метаттеги в index.html
+  <meta name="description" content="Website for Ceramic soul brand">
+  <meta name="author" content="Artem">
+16) підключаю в файлі style.scss - @use '/src/sass/modern-normalize.min.css';
+17) підключаю шрифт в файлі style.scss - @use '/src/sass/fontello.css';
+18) в папці sass створюємо папку зі змінними base
+19) в папці sass створюємо папку blocks - де будуть розміщені стилі блоків
+20) в папці sass створюємо папку ui -
+21) в папці sass створюємо папку libs - бібліотеки які я буду використовувати в проекті
+22) Перемістив файли frontello.css, modern-normalise.min.css в папку libs
+23) Замінили шлях до файлів стилів в файлів style.scss - /src/sass/libs/fontello.css
+24) Створюємо файл змінних в папці sass - base - variables.scss, прописав змінні кольори з style kit (та використовував локальні токени! в pixso)
+! Була проблема з відображенням іконки, проблема була в fontello.css там були відносні шляхи а не абсолютні;
+25) В файл style.scss підключив файл змінних @use '/src/sass/base/variables.scss'; (в файл де використовуються стилі також підключаються файли стілів які використовуються)
+26) підключаю змінну вже так color: variables.$ui-error; (назва файлу . змінна)
+27) спосіб простіше, задаємо ім'я тест -  @use '/src/sass/base/variables.scss' as v;
+    v.$ui-error;
+28*) 	Але ще один лайфхак це
+
+    @use '/src/sass/base/variables.scss' as *;
+
+    - потрібно бути обережним, наприклад щоб не почали конфліктувати класи, але ми не збираємось давати однакові
+    Тоді вже без назви color:
+
+    $ui-error;
+
+
+29) В цьому практичному завданні ми вже будемо користуватись rem.
+Rem відталкується від font-size який стоїть в html, за замовчуванням там 16px (наприклад якщо потрібно 32px то це буде 2rem) (32/16=2)
+
+Найкраще користуватись функцією яку я підключаю @use '/src/sass/pxtorem.scss';
+
+    @use "sass:math";
+
+    @function rem($pixel) {
+      @if math.is-unitless($pixel) {
+        @return math.div($pixel, 16) + rem;
+      } @else {
+        @error 'Do not use units of measurement when working with the rem() function. Pass only numbers as arguments.';
+      }
+    }
+
+тоді я задаю px в rem за допомогою font-size: pxtorem.rem(32);
+
+але краще
+
+@use '/src/sass/pxtorem.scss' as *;
+тоді ж буде font-size: rem(32);
+
+Але самий зручний і самий ленивий варіант яким буду користуватись це https://www.npmjs.com/package/postcss-pxtorem
+(Не забуваю вказати цю команду, якщо перезагружав пк Set-ExecutionPolicy RemoteSigned)
+вводимо команду npm i postcss-pxtorem (взяв з сайту)
+
+Створюю файл postcss.config.js в корні і змістом
+
+    module.exports = {
+      plugins: {
+        "postcss-pxtorem": {
+          rootValue: 16,
+          propList: ["*"], // Преобразовывать все свойства
+          selectorBlackList: [], // Селекторы, которые нужно исключить из преобразования
+          replace: true, // Заменять px на rem
+          mediaQuery: true, // Преобразовывать px внутри media queries
+          minPixelValue: 0, // Минимальное значение px для преобразования
+        },
+      },
+    };
+
+І потім px автоматично стають rem
+
+
+
+
+
+
+ВЕЛИКА ПРАКТИКА - Працюємо з Mobile first
+
+1) Створюємо файл basic.scss в теці base. Там будуть всі наші основні стилі, туди ж переносимо всі стилі з style.scss.
+SCSS - стає просто файлом з підключенням.
+2) Створюємо стиль контейнеру задаємо ширину 100% і відступи по бокам
+3) Для кожного блоку та секції створюємо файл в blocks. Наприклад
+    header
+    promo
+
+!! НЕ ЗАБУВАЙ КОЖЕН ФАЙЛ ПІДКЛЮЧАТИ
+
+в теці ui я наприклад буду задавати заголовки
+тому я там створюю файл titles.scss
+
+в теці basr я наприклад буду задавати міксіни
+тому я там створюю файл mixins.scss
+
+задавати логічні властивості для тексту (напрямок письма) цю тему щось важко розумію
