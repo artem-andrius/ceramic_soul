@@ -5,15 +5,16 @@
 @use '/src/sass/libs/grids-responsive-min.css';
 
 @use '/src/sass/libs/fontello.css';
+// Підключаємо змінні
 @use '/src/sass/base/variables.scss';
 @use '/src/sass/base/basic.scss';
-
-@use '/src/sass/blocks/header.scss';
 
 @use '/src/sass/ui/titles.scss';
 
 @use '/src/sass/ui/button.scss';
 
 // Підключаємо стилі секцій
+@use '/src/sass/blocks/header.scss';
 @use '/src/sass/blocks/promo.scss';
 @use '/src/sass/blocks/activities.scss';
+@use '/src/sass/blocks/touch.scss';
