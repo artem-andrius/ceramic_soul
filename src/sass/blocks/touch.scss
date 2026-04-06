@@ -2,18 +2,15 @@
 @use '/src/sass/base/variables.scss' as *;
 
 .touch {
+  position: relative;
   padding-top: 60px;
   &__wrapper {
     margin-top: 60px;
-    // мій код
-    position: relative;
   }
   &__img {
     display: none;
   }
-  &__img-vase {
-    display: none;
-  }
+
   &__fieldset {
     border: none;
     margin: 0;
@@ -44,6 +41,7 @@
     }
     &::placeholder {
       color: $ui-disabled;
+      font-size: 14px;
     }
   }
   &__textarea {
@@ -62,6 +60,7 @@
     }
     &::placeholder {
       color: $ui-disabled;
+      font-size: 14px;
     }
   }
   &__chek-block {
@@ -82,21 +81,23 @@
   &__btn {
     margin-top: 20px;
   }
+  &__decor {
+    display: none;
+  }
 }
 
 // Мій код
 @media screen and (min-width: 768px) {
   .touch {
-    &__input {
-      width: 50%;
+    &__form {
+      position: relative;
+      width: 300px;
+      padding-left: 24px;
     }
-    &__textarea {
-      width: 50%;
-    }
-    &__img-vase {
-      position: absolute;
+    &__decor {
       display: block;
-      bottom: 0; /* Притискаємо до низу */
+      position: absolute;
+      bottom: 0;
       right: 0;
     }
   }
@@ -123,10 +124,10 @@
 @media screen and (min-width: 1920px) {
   .touch {
     // &__wrapper {
-    //   column-gap: 20px;
+    //   column-gap: 1px;
     // }
     &__img {
-      width: 573px;
+      width: 573px; // Ваша поточна ширина
       height: 356px;
     }
     // мій код
