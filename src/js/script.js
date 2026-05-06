@@ -14,13 +14,14 @@ try {
   new Swiper('.works__slider', {
     slidesPerView: 1,
     loop: true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
+    },
+    navigation: {
+      nextEl: '.icon-right-open',
+      // замінив на свої стрілки
+      prevEl: '.icon-left-open',
     },
     breakpoints: {
       // when window width is >= 1200px
@@ -30,6 +31,7 @@ try {
       },
       1920: {
         spaceBetween: 35,
+        slidesPerView: 3,
       },
     },
     modules: [Navigation, Pagination],
